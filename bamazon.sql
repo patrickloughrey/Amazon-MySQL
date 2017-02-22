@@ -1,24 +1,8 @@
 CREATE TABLE departments (
-  id INTEGER(11) AUTO_INCREMENT NOT NULL UNIQUE,
-  department_name VARCHAR(30),
-  over_head_costs INTEGER(11),
+  id INTEGER AUTO_INCREMENT NOT NULL,
+  department_name VARCHAR(20),
+  over_head_costs DECIMAL(10,4),
   PRIMARY KEY (id)
-);
-
-CREATE TABLE products (
-  id INTEGER(11) AUTO_INCREMENT NOT NULL UNIQUE,
-  product_name VARCHAR(30),
-  FOREIGN KEY (department_id) references departments(id),
-  price DECIMAL(10,4),
-  stock_quantity INTEGER(11),
-  PRIMARY KEY (id)
-);
-
-CREATE TABLE sales (
-  id INTEGER(11) AUTO_INCREMENT NOT NULL UNIQUE,
-  FOREIGN KEY (product_id) references products(id),
-  quantity_purchased INTEGER(11),
-  created_at TIMESTAMP(20)  
 );
 
 INSERT INTO departments (department_name, over_head_costs)
@@ -30,48 +14,40 @@ VALUES ("Home Improvement", 1000);
 INSERT INTO departments (department_name, over_head_costs)
 VALUES ("Automotive", 10000);
 
-INSERT INTO products (product_name, department_id, price, stock_quantity)
-VALUES ("Macbook Pro", (SELECT id FROM departments WHERE department_name="Technology"), 1500.0, 5);
-
-INSERT INTO products (product_name, department_id, price, stock_quantity)
-VALUES ("iPad Pro", (SELECT id FROM departments WHERE department_name="Technology"), 899.95, 5);
-
-INSERT INTO products (product_name, department_id, price, stock_quantity)
-VALUES ("Apple Pencil", (SELECT id FROM departments WHERE department_name="Technology"), 149.95, 5);
-
-INSERT INTO products (product_name, department_id, price, stock_quantity)
-VALUES ("Amazon Echo", (SELECT id FROM departments WHERE department_name="Technology"), 500.0, 5);
-
-INSERT INTO products (product_name, department_id, price, stock_quantity)
-VALUES ("Phantom Drone", (SELECT id FROM departments WHERE department_name="Technology"), 1999.95, 2);
-
-INSERT INTO products (product_name, department_id, price, stock_quantity)
-VALUES ("Beats by Dre", (SELECT id FROM departments WHERE department_name="Technology"), 199.95, 10);
-
-INSERT INTO products (product_name, department_id, price, stock_quantity)
-VALUES ("Windshield Wipers", (SELECT id FROM departments WHERE department_name="Automotive"), 29.95, 20);
-
-INSERT INTO products (product_name, department_id, price, stock_quantity)
-VALUES ("Synthetic Oil", (SELECT id FROM departments WHERE department_name="Automotive"), 49.95, 20);
-
-INSERT INTO products (product_name, department_id, price, stock_quantity)
-VALUES ("Jump Starter Battery Pack", (SELECT id FROM departments WHERE department_name="Automotive"), 69.95, 10);
-
-INSERT INTO products (product_name, department_id, price, stock_quantity)
-VALUES ("License Plate Frame", (SELECT id FROM departments WHERE department_name="Automotive"), 14.99, 20);
-
-INSERT INTO products (product_name, department_id, price, stock_quantity)
-VALUES ("Keurig", (SELECT id FROM departments WHERE department_name="Home Improvement"), 149.95, 10);
-
-INSERT INTO products (product_name, department_id, price, stock_quantity)
-VALUES ("Refrigerator", (SELECT id FROM departments WHERE department_name="Home Improvement"), 499.95, 10);
-
-INSERT INTO products (product_name, department_id, price, stock_quantity)
-VALUES ("Coffee Grinder", (SELECT id FROM departments WHERE department_name="Home Improvement"), 149.95, 20);
-
-INSERT INTO products (product_name, department_id, price, stock_quantity)
-VALUES ("Deluxe Carpet Cleaner", (SELECT id FROM departments WHERE department_name="Home Improvement"), 299.95, 10);
+CREATE TABLE products (
+  id INTEGER AUTO_INCREMENT NOT NULL UNIQUE,
+  product_name VARCHAR(20),
+  price DECIMAL(10,4),
+  stock_quantity INTEGER(11),
+  department_id INTEGER NOT NULL,
+  FOREIGN KEY (department_id) references departments (id),
+  PRIMARY KEY (id)
+);
 
 
+INSERT INTO products (id, product_name, price, stock_quantity, department_id) VALUES 
+(1, "Macbook Pro", 1500.0, 10, 1),
+(2, "iPad Pro", 899.95, 10, 1),
+(3, "Apple Pencil", 149.95, 10, 1),
+(4, "Amazon Echo", 500.0, 10, 1),
+(5, "Phantom Drone", 1999.95, 4, 1),
+(6, "Beats by Dre", 199.95, 20, 1),
+(7, "Windshield Wipers", 29.95, 40, 3),
+(8, "Synthetic Oil", 49.95, 40, 3),
+(9, "Jump Starter Battery Pack", 69.95, 30, 3),
+(10, "License Plate Frame", 14.99, 30, 3),
+(11, "Keurig", 149.95, 40, 2),
+(12, "Refrigerator", 499.95, 20, 2),
+(13, "Coffee Grinder", 149.95, 40, 2),
+(14, "Deluxe Carpet Cleaner", 299.95, 100, 2);
+
+CREATE TABLE sales (
+  id INTEGER AUTO_INCREMENT NOT NULL UNIQUE,
+  product_id INTEGER NOT NULL,
+  quantity_purchased INTEGER,
+  created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (product_id) references products(id),
+  PRIMARY KEY (id)
+);
 
 
