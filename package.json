@@ -1,0 +1,23 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "node.js and sql cli application",
+  "main": "index.js",
+  "dependencies": {
+    "mysql": "^2.13.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patrickloughrey/Amazon-MySQL.git"
+  },
+  "author": "Patrick Loughrey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/patrickloughrey/Amazon-MySQL/issues"
+  },
+  "homepage": "https://github.com/patrickloughrey/Amazon-MySQL#readme"
+}

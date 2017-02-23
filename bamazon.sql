@@ -1,3 +1,6 @@
+--
+-- Table structure for table departments 
+--
 CREATE TABLE departments (
   id INTEGER AUTO_INCREMENT NOT NULL,
   department_name VARCHAR(20),
@@ -5,15 +8,14 @@ CREATE TABLE departments (
   PRIMARY KEY (id)
 );
 
-INSERT INTO departments (department_name, over_head_costs)
-VALUES ("Technology", 8000);
+INSERT INTO departments (department_name, over_head_costs) VALUES 
+("Technology", 8000),
+("Home Improvement", 1000),
+("Automotive", 10000);
 
-INSERT INTO departments (department_name, over_head_costs)
-VALUES ("Home Improvement", 1000);
-
-INSERT INTO departments (department_name, over_head_costs)
-VALUES ("Automotive", 10000);
-
+--
+-- Table structure for table products
+--
 CREATE TABLE products (
   id INTEGER AUTO_INCREMENT NOT NULL UNIQUE,
   product_name VARCHAR(20),
@@ -24,7 +26,9 @@ CREATE TABLE products (
   PRIMARY KEY (id)
 );
 
-
+--
+-- Populate products table 
+--
 INSERT INTO products (id, product_name, price, stock_quantity, department_id) VALUES 
 (1, "Macbook Pro", 1500.0, 10, 1),
 (2, "iPad Pro", 899.95, 10, 1),
@@ -34,13 +38,16 @@ INSERT INTO products (id, product_name, price, stock_quantity, department_id) VA
 (6, "Beats by Dre", 199.95, 20, 1),
 (7, "Windshield Wipers", 29.95, 40, 3),
 (8, "Synthetic Oil", 49.95, 40, 3),
-(9, "Jump Starter Battery Pack", 69.95, 30, 3),
+(9, "Jumper Cables", 69.95, 30, 3),
 (10, "License Plate Frame", 14.99, 30, 3),
 (11, "Keurig", 149.95, 40, 2),
 (12, "Refrigerator", 499.95, 20, 2),
 (13, "Coffee Grinder", 149.95, 40, 2),
-(14, "Deluxe Carpet Cleaner", 299.95, 100, 2);
+(14, "Carpet Cleaner", 299.95, 100, 2);
 
+--
+-- Table structure for table sales
+--
 CREATE TABLE sales (
   id INTEGER AUTO_INCREMENT NOT NULL UNIQUE,
   product_id INTEGER NOT NULL,
