@@ -4,6 +4,8 @@
   "description": "node.js and sql cli application",
   "main": "index.js",
   "dependencies": {
+    "cli-table": "^0.3.1",
+    "inquirer": "^3.0.4",
     "mysql": "^2.13.0"
   },
   "devDependencies": {},
