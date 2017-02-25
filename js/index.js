@@ -75,7 +75,7 @@ function purchase() {
                   var currItem = results[product - 1];
                   var newStock = currItem.stock_quantity - quantity;
                   var purchaseAmount = quantity * currItem.price;
-
+                  console.log("\n");
                   /**** Used for testing
 
                   console.log(quantity);
@@ -94,8 +94,8 @@ function purchase() {
 
                   ]).then(function(data) {
                         if(data.confirm == 'yes') {
-                            console.log("You have purchased " + quantity + " units of " + currItem.product_name + "!");
-                            console.log("The total comes out to $" + Math.round(purchaseAmount) + ".");
+                            console.log("\n");
+                            console.log("Your purchase of " + quantity + " units of " + currItem.product_name + " is currently being processed!");
 
                         } else {
                             purchase();
@@ -113,19 +113,25 @@ function purchase() {
                             } 
                     });
 
+                    /* Insert sale into the sales table */
+                    connection.query("INSERT INTO sales (product_id, quantity_purchased) VALUES (" + currItem.id + ", " + quantity + " )", function(error, results, field) {
+
+                          if(error) {
+                            throw error;
+
+                          } else {
+                              /* Using setTimeout() to make sure that Inquirer finishes before connection.query() executes */
+                              var processing = setTimeout(function() {
+                                console.log("\n");
+                                console.log("Congratulations! Your purchase has been approved!");
+                                console.log("\n");
+                                console.log("The total of your purchase comes out to $" + purchaseAmount);
+                              }, 5000);
+                          }
+                    });
+
                   }
 
-                  /* Insert purchase into sales table */
-                  /*
-                  connection.query('INSERT INTO sales SET ? ', function(error, results, fields) {
-                      product_id : product,
-                      quantity_purchased : stock 
-
-                  }, function(error, results, fields) {
-                        console.log("Insert successful!");
-                  });
-
-            }); */
         });
 
     });
