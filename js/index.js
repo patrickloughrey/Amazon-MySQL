@@ -112,7 +112,6 @@ function purchase() {
                                 console.log("--------------------------------------------------");
                                 console.log("Congratulations! Your purchase has been approved!");
                                 console.log("--------------------------------------------------");
-                                console.log("\n");
                                 console.log("The total of your purchase comes out to $" + purchaseAmount);
                                 console.log("\n");
                               }, 5000);
