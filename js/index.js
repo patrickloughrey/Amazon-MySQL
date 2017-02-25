@@ -36,7 +36,7 @@ inquirer.prompt([
       message: "Would you like to make a purchase? (yes/no)" }
 
   ]).then(function(data) {
-
+        console.log("\n");
         if(data.purchase == 'yes') {
             purchase();
 
@@ -59,12 +59,11 @@ function purchase() {
       message: "Enter the ID of the product you would like to purchase." }
 
   ]).then(function(data) {
-
+        console.log("\n");
         var product = data.product_id;
 
         /* Prompt user for quantity of product they wish to purchase */
         connection.query('SELECT * FROM products ', function(error, results, fields) {
-            console.log("\n");
             inquirer.prompt([
                 { type: "input",
                   name: "stock_quantity",
@@ -76,10 +75,47 @@ function purchase() {
                   var currItem = results[product - 1];
                   var newStock = currItem.stock_quantity - quantity;
                   var purchaseAmount = quantity * currItem.price;
+
+                  /**** Used for testing
+
                   console.log(quantity);
                   console.log(currItem);
                   console.log(newStock);
                   console.log(purchaseAmount);
+                  console.log("\n"); 
+
+                  ****/
+
+                  /* Confirm what the customer is purchasing */
+                  inquirer.prompt([
+                      { type: "input",
+                        name: "confirm",
+                        message: "Are you sure you want to purchase " + quantity + " units of " + currItem.product_name + "? (yes/no)" }
+
+                  ]).then(function(data) {
+                        if(data.confirm == 'yes') {
+                            console.log("You have purchased " + quantity + " units of " + currItem.product_name + "!");
+                            console.log("The total comes out to $" + Math.round(purchaseAmount) + ".");
+
+                        } else {
+                            purchase();
+                        }
+                  });
+
+                  /* Update inventory */
+                  if(quantity <= currItem.stock_quantity) {
+
+                    /* There is enough inventory to satisfy customer request */
+                    connection.query("UPDATE products SET stock_quantity =" + newStock + " WHERE id =" + currItem.id, function(error, results, field) {
+
+                            if(error) {
+                                throw error;
+                            } 
+                    });
+
+                  }
+
+                  /* Insert purchase into sales table */
                   /*
                   connection.query('INSERT INTO sales SET ? ', function(error, results, fields) {
                       product_id : product,
