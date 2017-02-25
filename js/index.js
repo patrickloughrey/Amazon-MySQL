@@ -87,20 +87,7 @@ function purchase() {
                   ****/
 
                   /* Confirm what the customer is purchasing */
-                  inquirer.prompt([
-                      { type: "input",
-                        name: "confirm",
-                        message: "Are you sure you want to purchase " + quantity + " units of " + currItem.product_name + "? (yes/no)" }
-
-                  ]).then(function(data) {
-                        if(data.confirm == 'yes') {
-                            console.log("\n");
-                            console.log("Your purchase of " + quantity + " units of " + currItem.product_name + " is currently being processed!");
-
-                        } else {
-                            purchase();
-                        }
-                  });
+                  console.log("Your purchase of " + quantity + " units of " + currItem.product_name + " is currently being processed!");
 
                   /* Update inventory */
                   if(quantity <= currItem.stock_quantity) {
@@ -122,23 +109,51 @@ function purchase() {
                           } else {
                               /* Using setTimeout() to make sure that Inquirer finishes before connection.query() executes */
                               var processing = setTimeout(function() {
-                                console.log("\n");
+                                console.log("--------------------------------------------------");
                                 console.log("Congratulations! Your purchase has been approved!");
+                                console.log("--------------------------------------------------");
                                 console.log("\n");
                                 console.log("The total of your purchase comes out to $" + purchaseAmount);
+                                console.log("\n");
                               }, 5000);
                           }
                     });
 
+
+                    var shopAgain = setTimeout(function() {
+
+                    inquirer.prompt([
+                        { type: "input",
+                          name: "continue_shopping",
+                          message: "Thank you for your purchase! Would you like to continue shopping? (yes/no)" }
+
+                    ]).then(function(data) {
+
+                          if(data.continue_shopping == 'yes') {
+                              purchase();
+
+                          } else {
+                              console.log("\n");
+                              console.log("Thank you for shopping at Bamazon! We look forward to seeing you again!");
+                              console.log("\n");
+                              connection.end();
+                          }
+                    });
+
+                  }, 8000);
+
+                  /* If quantity requested is more than current inventory */
+                  } else {
+                      console.log("Insufficient quantity! We are sorry, please choose another product or not as many units..");
                   }
 
-        });
+          }); 
 
-    });
+      });
 
   });
 
-} /********* End of purchase() **************/
+} /********* End of function purchase() **************/
 
-}); /********* End of products connection.query() *********/
+}); /********* End of products *********/
 
