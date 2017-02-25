@@ -4,7 +4,7 @@
 
 A command-line interface application that combines MySQL and Node.js. The application simulates visiting an online Amazon store. The customer is provided with products to purchase and if a customer chooses to purchase an item from the inventory, the SQL database is updated with changes to the product inventory and sales invoice.
 
-![Alt Test](https://github.com/patrickloughrey/Amazon-MySQL/tree/master/images/amazon_gif.gif)
+![Alt Test](https://github.com/patrickloughrey/Amazon-MySQL/blob/master/images/amazon_gif.gif)
 
 <h2> Technologies </h2>
 <ul>
